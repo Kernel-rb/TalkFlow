@@ -1,0 +1,22 @@
+{
+  "name": "talkflow",
+  "version": "0.0.1",
+  "description": "chat-app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kernel-rb/TalkFlow.git"
+  },
+  "author": "kernel.rb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kernel-rb/TalkFlow/issues"
+  },
+  "homepage": "https://github.com/Kernel-rb/TalkFlow#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
