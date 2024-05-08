@@ -4,7 +4,7 @@
   "description": "chat-app",
   "main": "backend/sever.js",
   "scripts": {
-    "start": "node backend/server.js"
+    "start": "nodemon backend/server.js"
   },
   "repository": {
     "type": "git",
