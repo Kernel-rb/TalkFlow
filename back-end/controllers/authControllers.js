@@ -18,18 +18,26 @@ export const signupUser = async (req, res) => {
         const profilePic = `https://avatar.iran.liara.run/username?username=${username}`;
 
         const newUser = new User({
-            fullName,
+            fullname: fullName,
             username,
             password,
             gender,
             profilePic,
-        })
+        });
         await newUser.save();
-        res.status(201).json({ message: "User registered successfully" });
-    } catch (enrror) {
+        res.status(201).json({
+            _id: newUser._id,
+            fullname: newUser.fullname,
+            username: newUser.username,
+            gender: newUser.gender
+        });
+
+    } catch (error) {
         console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
+
 
 
 
