@@ -62,13 +62,47 @@ export const register = async (req, res) => {
 
 
 export const login = async (req, res) => {
-    res.json({
-        message: "Register route works"
-    });
+    try {
+        const { username, password } = req.body;
+        const user = await User.findOne({ username });;
+        const isMatch = await bcrypt.compare(password, user?.password || "");
+        if (!user || !isMatch) return res.status(400).json({ message: "Invalid credentials." });
+        generateTokenanSetCookie(user._id, res);
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            username: user.username,
+            email: user.email,
+            followers: user.followers,
+            following: user.following,
+            profilePicture: user.profilePicture,
+            coverImage: user.coverImage,
+            bio: user.bio,
+            link: user.link,
+            token: user.token
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong." });
+    }
 }
 
 export const logout = async (req, res) => {
-    res.json({
-        message: "Logout route works"
-    });
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out." });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong." });
+    }
+}
+
+export const me = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id); 
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Something went wrong." });
+    }
 }
