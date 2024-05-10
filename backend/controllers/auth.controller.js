@@ -1,7 +1,10 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import { generateTokenanSetCookie } from "../lib/utils/generateTokenanSetCookie.js";
 
-export const refister = async (req, res) => {
+
+
+export const register = async (req, res) => {
     try {
         const { fullName, username, email, password } = req.body;
         // full Name validation
