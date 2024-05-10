@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 import connectDB from "./db/connectDB.js";
@@ -11,6 +10,7 @@ const PORT = process.env.PORT || 5000;
 
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded 
 app.use("/api/auth", authRoutes);
 
 
