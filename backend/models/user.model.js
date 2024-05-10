@@ -20,7 +20,40 @@ const userSchema = new mongoose.Schema({
         required: true,
         minlength: 6
     },
-
+    followers: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: []
+        }
+    ],
+    following: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: []
+        }
+    ],
+    profilePicture: {
+        type: String,
+        default: ""
+    },
+    coverImage: {
+        type: String,
+        default: ""
+    },
+    bio: {
+        type: String,
+        default: ""
+    },
+    link: {
+        type: String,
+        default: ""
+    }
 },
 { timestamps: true }
 );
+
+const User = mongoose.model("User", userSchema);
+
+export default User;
