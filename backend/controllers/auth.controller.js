@@ -55,7 +55,7 @@ export const register = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error);
+        console.log("error in register: ", error);
         res.status(500).json({ message: "Something went wrong." });
     }
 }
@@ -83,7 +83,7 @@ export const login = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log("error in login: ", error);
         res.status(500).json({ message: "Something went wrong." });
     }
 }
@@ -93,16 +93,18 @@ export const logout = async (req, res) => {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out." });
     } catch (error) {
-        console.log(error);
+        console.log("error in logout: ", error);
         res.status(500).json({ message: "Something went wrong." });
     }
 }
 
 export const me = async (req, res) => {
     try {
-        const user = await User.findById(req.user._id); 
+        const user = await User.findById(req.user._id).select("-password");
+        if (!user) return res.status(404).json({ message: "User not found." });
+        res.status(200).json(user);
     } catch (error) {
-        console.log(error);
+        console.log("error in me: ", error);
         res.status(500).json({ message: "Something went wrong." });
     }
 }
