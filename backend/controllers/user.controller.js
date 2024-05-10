@@ -17,7 +17,7 @@ export const getSuggestedUsers = async (req, res) => {
 
 export const followUnfollowUser = async (req, res) => {
     try {
-        const { id } = req.parms;
+        const { id } = req.params;
         const usertoModify = await User.findById(id);
         const curretUser = await User.findById(req.user._id);
         if (!usertoModify || !curretUser) return res.status(404).json({ message: "User not found." });
