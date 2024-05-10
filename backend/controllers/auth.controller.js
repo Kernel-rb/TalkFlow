@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
-export const login = async (req, res) => {
+export const refister = async (req, res) => {
     try {
         const { fullName, username, email, password } = req.body;
         // full Name validation
@@ -58,7 +58,7 @@ export const login = async (req, res) => {
 }
 
 
-export const register = async (req, res) => {
+export const login = async (req, res) => {
     res.json({
         message: "Register route works"
     });
