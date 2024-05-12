@@ -68,7 +68,35 @@ export const commentOnPost = async (req, res) => {
     
     }
 };
-export const likeUnlikePost = async (req, res) => { };
+export const likeUnlikePost = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { id: postId } = req.params;
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ message: "Post not found" });
+        const userLiked = post.likes.includes(userId);
+        if (userLiked) {
+            // Unlike
+            await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+            res.status(200).json({ message: "Post unliked" });
+        } else {
+            // like 
+            post.likes.push(userId);
+            await post.save();
+            const notification = new Notification({
+                from: userId,
+                to: post.user,
+                type: "like"
+            });
+            await notification.save();
+            res.status(201).json({ message: "Post liked" });
+        }
+    } catch (error) {
+        console.log("Error in likeUnlikePost: ", error);
+        return res.status(500).json({ message: "Internal server error" });
+    
+    }
+ };
 export const getAllPosts = async (req, res) => { };
 export const getLikedPosts = async (req, res) => { };
 export const getFollowingPosts = async (req, res) => { };

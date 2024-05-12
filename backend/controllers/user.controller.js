@@ -36,38 +36,41 @@ export const getSuggestedUsers = async (req, res) => {
 export const followUnfollowUser = async (req, res) => {
     try {
         const { id } = req.params;
-        const usertoModify = await User.findById(id);
-        const curretUser = await User.findById(req.user._id);
-        if (!usertoModify || !curretUser) return res.status(404).json({ message: "User not found." });
-        if (id === req.user._id.toString()) return res.status(400).json({ message: "You can't follow/unfollow yourself." });
-        const isFollowing = curretUser.followers.includes(id);
+        const userToModify = await User.findById(id);
+        const currentUser = await User.findById(req.user._id);
+
+        if (id === req.user._id.toString()) {
+            return res.status(400).json({ error: "You can't follow/unfollow yourself" });
+        }
+
+        if (!userToModify || !currentUser) return res.status(400).json({ error: "User not found" });
+
+        const isFollowing = currentUser.following.includes(id);
+
         if (isFollowing) {
-            // unfollow
+            // Unfollow the user
             await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
             await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
-            const newNotification = new Notification({
-                type: "unfollow",
-                from: req.user._id,
-                to: usertoModify._id,
-            });
-            await newNotification.save();
-            res.status(200).json({ message: "User unfollowed." });
+
+            res.status(200).json({ message: "User unfollowed successfully" });
         } else {
-            // flollow
+            // Follow the user
             await User.findByIdAndUpdate(id, { $push: { followers: req.user._id } });
             await User.findByIdAndUpdate(req.user._id, { $push: { following: id } });
-            // send notification 
+            // Send notification to the user
             const newNotification = new Notification({
                 type: "follow",
                 from: req.user._id,
-                to: usertoModify._id,
+                to: userToModify._id,
             });
+
             await newNotification.save();
-            res.status(200).json({ message: "User followed." });
+
+            res.status(200).json({ message: "User followed successfully" });
         }
     } catch (error) {
-        console.log("error in getSuggestedUsers: ", error);
-        res.status(500).json({ message: "Something went wrong." });
+        console.log("Error in followUnfollowUser: ", error.message);
+        res.status(500).json({ error: error.message });
     }
 }
 
