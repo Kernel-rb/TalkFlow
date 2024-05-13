@@ -78,10 +78,12 @@ export const likeUnlikePost = async (req, res) => {
         if (userLiked) {
             // Unlike
             await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+            await Post.updateOne({ _id: userId } , { $pull: { likedPosts: postId } });
             res.status(200).json({ message: "Post unliked" });
         } else {
             // like 
             post.likes.push(userId);
+            await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });  
             await post.save();
             const notification = new Notification({
                 from: userId,
@@ -121,6 +123,23 @@ export const getAllPosts = async (req, res) => {
     }
 };
 export const getLikedPosts = async (req, res) => { 
+    const userId = req.params.id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const likedPost = await Post.find({ _id: { $in: user.likedPosts } }).populate({
+            path: "user",
+            select: "-password",
+        }).populate({
+            path: "comments.user",
+            select: "-password",
+        });
+        res.status(200).json(likedPost);
+        
+    } catch (error) {
+        console.log("Error in getLikedPosts: ", error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
 };
 export const getFollowingPosts = async (req, res) => { };
 export const getUserPosts = async (req, res) => { };
