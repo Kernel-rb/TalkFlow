@@ -4,14 +4,16 @@ import bcrypt from 'bcryptjs';
 import { v2 as cloudinary } from 'cloudinary';
 
 export const getUserProfile = async (req, res) => {
-    const { username } = req.parms;
+    const { username } = req.params;
+
     try {
         const user = await User.findOne({ username }).select("-password");
-        if (!user) return res.status(404).json({ message: "User not found." });
+        if (!user) return res.status(404).json({ message: "User not found" });
+
         res.status(200).json(user);
     } catch (error) {
-        console.log("error in getUserProfile: ", error);
-        res.status(500).json({ message: "Something went wrong." });
+        console.log("Error in getUserProfile: ", error.message);
+        res.status(500).json({ error: error.message });
     }
 }
 
