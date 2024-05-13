@@ -88,29 +88,30 @@ export const POSTS = [
     },
 ];
 
+// suggested users 
 export const USERS_FOR_RIGHT_PANEL = [
     {
         _id: "1",
-        fullName: "John Doe",
-        username: "johndoe",
-        profileImg: "/avatars/boy2.png",
+        fullName: "Ilyass Akioui",
+        username: "gent_ar",
+        profileImg: "/avatars/gent_ar.jpg",
     },
     {
         _id: "2",
-        fullName: "Jane Doe",
-        username: "janedoe",
+        fullName: "Samir Fezani",
+        username: "SamirDrahm",
         profileImg: "/avatars/girl1.png",
     },
     {
         _id: "3",
-        fullName: "Bob Doe",
-        username: "bobdoe",
-        profileImg: "/avatars/boy3.png",
+        fullName: "Othmane Dounit",
+        username: "ecoomerce_dev",
+        profileImg: "/avatars/othmane.png",
     },
     {
         _id: "4",
-        fullName: "Daisy Doe",
-        username: "daisydoe",
+        fullName: "Ossama Elhayiane",
+        username: "-50e",
         profileImg: "/avatars/girl2.png",
     },
 ];
