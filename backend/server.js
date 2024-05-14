@@ -22,8 +22,8 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-app.use(express.json("limit: 5mb"));
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({ limit: '5mb', extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cookieParser()); // get cookies from request
 
 app.use("/api/auth", authRoutes);
