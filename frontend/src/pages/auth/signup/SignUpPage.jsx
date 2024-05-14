@@ -27,18 +27,20 @@ const SignUpPage = () => {
           },
           body: JSON.stringify({ email, username, fullName, password }),
         });
-        if(!res.ok) throw new Error('Something went wrong')
         const data = await res.json();  
+        if (!res.ok) throw new Error(data.message || 'An error occurred. Please try again.');
         if (data.error) throw new Error(data.error);
         console.log(data);
         return data;
       } catch (error) {
         console.error(error);
-        toast.error(error.message);
+        throw new Error(error.message); 
       }
-      },
+    },
+    onSuccess: () => {
+      toast.success("Account created successfully");
     }
-  );
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
