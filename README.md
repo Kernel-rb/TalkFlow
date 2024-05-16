@@ -21,7 +21,7 @@ This repository contains the code for a Twitter clone application. It is built u
 
 To get started with the development of this application, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/Twitter-Clone.git`
+1. Clone the repository: `git clone https://github.com/Kernel-rb/Twitter-Clone.git`
 2. Navigate to the backend directory: `cd backend` and follow the setup instructions.
 3. Navigate to the frontend directory: `cd frontend` and follow the setup instructions.
 4. Install dependencies: `npm install` or `yarn install`
